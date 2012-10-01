@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>JSConsole</title>
+  <script type="text/javascript" src="js/mootools.js" charset="utf-8"></script>
+  <script type="text/javascript" src="js/jsconsole.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="css/jsconsole.css" type="text/css" media="screen" title="jsconsole" charset="utf-8">
+</head>
+<body>
+  <h1>JSConsole</h1>
+  <textarea id="jsconsole" class="jsconsole" spellcheck="false"></textarea>
+  <script type="text/javascript" charset="utf-8">
+    window.addEvent( "domready", function() {
+      var t = new JSConsole( { "ui" : $("jsconsole"), "prompt" : "devdep:~$ " } );
+      t.registerCommand( new HelpCommand() );
+      t.registerCommand( new LSCommand() );
+      t.registerCommand( new LangsCommand( { langs: [ "ruby", "javascript", "c++", "java", "python", "php" ] } ) );
+      t.registerCommand( new FrameworksCommand( { frameworks: [ "ruby on rails", "sinatra", "padrino", "libcinder", "openframeworks", "processing", "django", "symfony", "mootools", "backbone.js", "dojo", "jquery" ] } ) );
+      t.registerCommand( new ContactsCommand( { "phone": "+7 916 875 15 16", "email": "dd@devdep.ru", "skype": "devdep" } ) );
+      t.registerCommand( new ManCommand() );
+      //t.registerCommand( new WhyCommand() );
+      t.registerCommand( new WhoCommand() );
+      t.registerCommand( new AsdasdCommand() );
+      t.registerCommand( new ExclamationCommand() );
+      t.registerCommand( new QuestionCommand() );
+      t.registerCommand( new HelloCommand() );
+    } );
+  </script>
+</body>
