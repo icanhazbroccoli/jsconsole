@@ -6,6 +6,7 @@
   
   <script type="text/javascript" src="js/command.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/not_found.js" charset="utf-8"></script>
+  <script type="text/javascript" src="js/commands/listing.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/asdasd.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/contacts.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/frameworks.js" charset="utf-8"></script>
@@ -29,9 +30,8 @@
       t.registerCommand( new HelpCommand() );
       t.registerCommand( new LSCommand() );
       t.registerCommand( new LangsCommand( { langs: [ "ruby", "javascript", "c++", "java", "python", "php" ] } ) );
-      t.registerCommand( new FrameworksCommand( { frameworks: [ "ruby on rails", "sinatra", "padrino", "libcinder", "openframeworks", "processing", "django", "symfony", "mootools", "backbone.js", "dojo", "jquery" ] } ) );
+      t.registerCommand( new ListingCommand( { name: "frameworks", elements: [ "ruby on rails", "sinatra", "padrino", "libcinder", "openframeworks", "processing", "django", "symfony", "mootools", "backbone.js", "dojo", "jquery" ] } ) );
       t.registerCommand( new ContactsCommand( { "phone": "+7 916 875 15 16", "email": "dd@devdep.ru", "skype": "devdep" } ) );
-      t.registerCommand( new ManCommand() );
       t.registerCommand( new WhoCommand() );
       t.registerCommand( new AsdasdCommand() );
       t.registerCommand( new ExclamationCommand() );
