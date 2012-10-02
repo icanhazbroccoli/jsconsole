@@ -1,17 +1,40 @@
 var JSConsole = new Class( {
 
+  options: {
+    history_storage_key: "jsconsole_history",
+    max_history_length: 100,
+    sl: "\0"
+  },
+  
   initialize: function( options ) {
+    this.options = Object.merge( this.options, options );
     this.commandPool = {};
-    this.history = [];
-    this.sl = "\0";
-    this.prompt = options.prompt;
-    this.ui = options.ui;
+    this.sl = this.options.sl;
+    this.prompt = this.options.prompt;
+    this.ui = this.options.ui;
     var self = this;
+    this.initHistory();
     this.ui.addEvent( "keydown", function( e ) {
       self.keyPressed.call( self, e )
     });
     this.pprompt( true );
     this.bindSlideDown();
+  },
+
+  initHistory: function() {
+    this.history = [];
+    var tmp;
+    if ( localStorage !== undefined ) {
+      if ( localStorage[ this.options.history_storage_key ] != undefined ) {
+        try {
+          tmp = JSON.parse( localStorage[ this.options.history_storage_key ] );
+          if ( tmp instanceof Array ) {
+            this.history = tmp;
+          }
+        } catch ( e ) {
+        }
+      }
+    }
   },
 
   registerCommand: function( command ) {
@@ -113,7 +136,7 @@ var JSConsole = new Class( {
       cb();
       return;
     }
-    this.history.push( cmd );
+    this.pushHistory( cmd );
     this.resetHistoryIndex();
     var argv = cmd.split( " " );
     var command = argv[ 0 ];
@@ -125,6 +148,17 @@ var JSConsole = new Class( {
       return;
     }
     this.commandPool[ command ].exec( argc, cb );
+  },
+  
+  pushHistory: function( cmd ) {
+    this.history.push( cmd );
+    if ( this.history.length > this.options.max_history_length ) {
+      this.history = this.history.slice(
+        this.history.length - this.options.max_history_length,
+        this.options.max_history_length
+      );
+    }
+    localStorage[ this.options.history_storage_key ] = JSON.stringify( this.history );
   },
 
   hint: function( chunk ) {
@@ -179,14 +213,13 @@ var JSConsole = new Class( {
 
     if ( elem.createTextRange ) {
       var range = elem.createTextRange();
-      range.move('character', caretPos);
+      range.move( 'character', caretPos );
       range.select();
     } else {
-      if ( elem.selectionStart ) {
-          elem.focus();
-          elem.setSelectionRange(caretPos, caretPos);
-      } else
-          elem.focus();
+      elem.focus();
+      if ( elem.selectionStart !== undefined ) {
+        elem.setSelectionRange( caretPos, caretPos );
+      }
     }
   },
 
@@ -196,6 +229,11 @@ var JSConsole = new Class( {
       e.stop();
       _parent.toggleClass( "collapsed" );
     } );
+  },
+  
+  focus: function() {
+    this.ui.focus();
+    this.setCaretPosition( this.ui.value.length );
   }
   
 } );
