@@ -19,6 +19,7 @@ var JSConsole = new Class( {
     });
     this.pprompt( true );
     this.bindSlideDown();
+    this.registerCommand( new NotFoundCommand() );
   },
 
   initHistory: function() {
@@ -146,12 +147,16 @@ var JSConsole = new Class( {
     var argv = cmd.split( " " );
     var command = argv[ 0 ];
     var argc = argv.slice( 1 );
-    if ( this.commandPool[ command ] == null ) {
-      var absolutely = [ "И поныне так", "Безоговорочно", "Вне всяких сомнений", "Совсем", "Вовсе", "Если вы понимаете, о чем я", "Опять", "Кто бы сомневался", "Удивил, ага" ];
-      this.cout( "\nКоманда <" + command + "> не найдена. " + absolutely[ Math.floor( Math.random() * absolutely.length ) ] + "." );
-      cb();
-      return;
+    if ( this.commandPool[ command ] === undefined ) {
+      console.log( "asd" );
+      command = null;
     }
+    // if ( this.commandPool[ command ] == null ) {
+    //   var absolutely = [ "И поныне так", "Безоговорочно", "Вне всяких сомнений", "Совсем", "Вовсе", "Если вы понимаете, о чем я", "Опять", "Кто бы сомневался", "Удивил, ага" ];
+    //   this.cout( "\nКоманда <" + command + "> не найдена. " + absolutely[ Math.floor( Math.random() * absolutely.length ) ] + "." );
+    //   cb();
+    //   return;
+    // }
     this.commandPool[ command ].exec( argc, cb );
   },
   
