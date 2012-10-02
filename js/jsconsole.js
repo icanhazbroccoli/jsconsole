@@ -48,7 +48,6 @@ var JSConsole = new Class( {
       this.ui.value += "\n";
     }
     this.ui.value += this.prompt + this.sl;
-    console.log( this.ui.value.length );
     if ( !nofocus ) {
       this.setCaretPosition( this.ui.value.length );
       this.ui.scrollTop = this.ui.scrollHeight;
@@ -56,7 +55,10 @@ var JSConsole = new Class( {
   },
 
   getInput: function() {
-    return this.ui.value.substring( this.searchLast( this.ui.value, this.sl ) + 1, this.ui.value.length );
+    return this.ui.value.substring(
+      this.searchLast( this.ui.value, this.sl ) + 1,
+      this.ui.value.length
+    );
   },
 
   searchLast: function( str, reg ) {
@@ -78,11 +80,13 @@ var JSConsole = new Class( {
       return;
     }
     switch( e.code ) {
+      // enter
       case 13:
         e.stop();
         this.proceed( input, function() { self.pprompt.call( self );
  } );
         break;
+      // backspace
       case 8:
         if ( input == "" )
           e.stop();
@@ -93,6 +97,7 @@ var JSConsole = new Class( {
           e.stop();
           this.ui.value = "";
           this.pprompt();
+          this.cout( input );
         }
         break;
       case 67:
