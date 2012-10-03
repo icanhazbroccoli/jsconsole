@@ -5,14 +5,14 @@
   <script type="text/javascript" src="js/mootools.js" charset="utf-8"></script>
   
   <script type="text/javascript" src="js/command.js" charset="utf-8"></script>
+  <script type="text/javascript" src="js/command_factory.js" charset="utf-8"></script>
+  <script type="text/javascript" src="js/commands/lazy.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/not_found.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/listing.js" charset="utf-8"></script>
-  <script type="text/javascript" src="js/commands/asdasd.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/contacts.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/help.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/ls.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/man.js" charset="utf-8"></script>
-  <script type="text/javascript" src="js/commands/question.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/who.js" charset="utf-8"></script>
   
   <script type="text/javascript" src="js/jsconsole.js" charset="utf-8"></script>
@@ -31,9 +31,9 @@
       t.registerCommand( new ListingCommand( { title: "Frameworks we use:", name: "frameworks", elements: "ruby on rails; sinatra; padrino; libcinder; openframeworks; processing; django; symfony; mootools; backbone.js; dojo; jquery" } ) );
       t.registerCommand( new ContactsCommand( { "phone": "+7 916 875 15 16", "email": "dd@devdep.ru", "skype": "devdep" } ) );
       t.registerCommand( new WhoCommand() );
-      t.registerCommand( new AsdasdCommand() );
-      t.registerCommand( new ExclamationCommand() );
-      t.registerCommand( new QuestionCommand() );
+      t.registerCommand( CommandFactory.create().named( "asdasd" ).withBody( "Why not!" ) );
+      t.registerCommand( CommandFactory.create().named( "!" ).withBody( "Rly?" ) );
+      t.registerCommand( CommandFactory.create().named( "?" ).withBody( "42" ) );
       t.focus();
     } );
   </script>

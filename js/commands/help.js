@@ -8,9 +8,9 @@ var HelpCommand = new Class( {
       return ( ( new String( i ) ).toString() != "null" );
     } ).join( "\t" ) );
     this.cout( "\n\nShortkeys provided:" );
-    this.cout( "\n* ⌘+K, Ctrl+K — purges output buffer" );
+    this.cout( "\n* ⌘+K, Ctrl+K — purge output buffer" );
     this.cout( "\n* Ctrl + C — abort current command" );
-    this.cout( "\n\nSuggest enabled using tab key" );
+    this.cout( "\n\nSuggest command input using tab key" );
     this.cout( "\nMost of commands has manual page using man [command]" );
     this.cout( "\n\nEnjoy! )))" );
     this.parent( argc, cb );
