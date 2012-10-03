@@ -26,7 +26,7 @@ var ListingCommand = new Class( {
     
     if ( this.argGiven( argc, "-l" ) ) {
       elements.each( function( el ) {
-        self.cout( "\n    •" + el );
+        self.cout( "\n    " + el );
       } );
     } else {
       this.cout( "\n" + elements.join( "\t" ) )
