@@ -10,7 +10,6 @@
   <script type="text/javascript" src="js/commands/asdasd.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/contacts.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/help.js" charset="utf-8"></script>
-  <script type="text/javascript" src="js/commands/langs.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/ls.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/man.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/question.js" charset="utf-8"></script>
@@ -25,11 +24,11 @@
   <textarea id="jsconsole" class="jsconsole" spellcheck="false"></textarea>
   <script type="text/javascript" charset="utf-8">
     window.addEvent( "domready", function() {
-      var t = new JSConsole( { "ui" : $("jsconsole"), "prompt" : "devdep:~$ " } );
+      var t = new JSConsole( { "ui" : $("jsconsole"), "prompt" : "term:~$ " } );
       t.registerCommand( new HelpCommand() );
       t.registerCommand( new LSCommand() );
-      t.registerCommand( new LangsCommand( { langs: [ "ruby", "javascript", "c++", "java", "python", "php" ] } ) );
-      t.registerCommand( new ListingCommand( { title: "Frameworks we use:", name: "frameworks", elements: "ruby on rails;sinatra;padrino;libcinder;openframeworks;processing;django;symfony;mootools;backbone.js;dojo;jquery" } ) );
+      t.registerCommand( new ListingCommand( { title: "Languages we use:", name: "langs", elements: "ruby; javascript; c++; java; python; php" } ) );
+      t.registerCommand( new ListingCommand( { title: "Frameworks we use:", name: "frameworks", elements: "ruby on rails; sinatra; padrino; libcinder; openframeworks; processing; django; symfony; mootools; backbone.js; dojo; jquery" } ) );
       t.registerCommand( new ContactsCommand( { "phone": "+7 916 875 15 16", "email": "dd@devdep.ru", "skype": "devdep" } ) );
       t.registerCommand( new WhoCommand() );
       t.registerCommand( new AsdasdCommand() );

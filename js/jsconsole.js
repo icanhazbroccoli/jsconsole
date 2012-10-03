@@ -159,6 +159,9 @@ var JSConsole = new Class( {
   },
   
   pushHistory: function( cmd ) {
+    if ( cmd == this.history[ this.history.length - 1 ] ) {
+      return;
+    }
     this.history.push( cmd );
     if ( this.history.length > this.options.max_history_length ) {
       this.history = this.history.slice(

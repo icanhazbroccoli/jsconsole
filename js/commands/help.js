@@ -4,7 +4,9 @@ var HelpCommand = new Class( {
   exec: function( argc, cb ) {
     this.cout( "\nНаш игрушечный терминал" );
     this.cout( "\n\nДоступные команды:" );
-    this.cout( "\n" + Object.keys( this.terminal.commandPool ).join( "\t" ) );
+    this.cout( "\n" + Object.keys( this.terminal.commandPool ).filter( function( i ) {
+      return ( i != null );
+    } ).join( "\t" ) );
     this.cout( "\n\nВ терминале работают шорткеи:" );
     this.cout( "\n* ⌘+K, Ctrl+K — очистит буфер вывода" );
     this.cout( "\n* Ctrl + C — прервет выполнение текушей команды" );
