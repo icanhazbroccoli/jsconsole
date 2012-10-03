@@ -12,20 +12,26 @@ var ListingCommand = new Class( {
   
   exec: function( argc, cb ) {
     var elements;
-    var response = "\n";
+    var self = this;
     
     if ( this.options.elements instanceof Array ) {
       elements = this.options.elements;
     } else if ( typeof( this.options.elements ) == "string" ) {
-      elements = this.options.elements.split( ";" );
+      elements = this.options.elements.split( /\s*;\s*/g );
+    }
+    
+    if ( this.options.title != null ) {
+      this.cout( "\n  " + this.options.title );
     }
     
     if ( this.argGiven( argc, "-l" ) ) {
-      response += elements.join( "\n" );
+      elements.each( function( el ) {
+        self.cout( "\n    •" + el );
+      } );
     } else {
-      response += elements.join( "\t" );
+      this.cout( "\n" + elements.join( "\t" ) )
     }
-    this.cout( response );
+
     this.parent( argc, cb );
   }
 } );
