@@ -6,7 +6,7 @@ var LSCommand = new Class( {
     this.parent( argc, cb );
   },
   help: function() {
-    this.cout( "\nКоманда ls:" );
-    this.cout( "\nЛистинг файлов текущей директории" );
+    this.cout( "\nls command:" );
+    this.cout( "\nOutputs current dir file listing" );
   }
 } );

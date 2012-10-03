@@ -2,21 +2,21 @@ var HelpCommand = new Class( {
   Extends: Command,
   name: "help",
   exec: function( argc, cb ) {
-    this.cout( "\nНаш игрушечный терминал" );
-    this.cout( "\n\nДоступные команды:" );
+    this.cout( "\nJS toy terminal" );
+    this.cout( "\n\nCommands enabled:" );
     this.cout( "\n" + Object.keys( this.terminal.commandPool ).filter( function( i ) {
-      return ( i != null );
+      return ( ( new String( i ) ).toString() != "null" );
     } ).join( "\t" ) );
-    this.cout( "\n\nВ терминале работают шорткеи:" );
-    this.cout( "\n* ⌘+K, Ctrl+K — очистит буфер вывода" );
-    this.cout( "\n* Ctrl + C — прервет выполнение текушей команды" );
-    this.cout( "\n\nДля команд работает автодополнение через нажатие Tab" );
-    this.cout( "\nПо каждой команде можно получить справку через команду man" );
-    this.cout( "\n\nПриятного использования! )))" );
+    this.cout( "\n\nShortkeys provided:" );
+    this.cout( "\n* ⌘+K, Ctrl+K — purges output buffer" );
+    this.cout( "\n* Ctrl + C — abort current command" );
+    this.cout( "\n\nSuggest enabled using tab key" );
+    this.cout( "\nMost of commands has manual page using man [command]" );
+    this.cout( "\n\nEnjoy! )))" );
     this.parent( argc, cb );
   },
   help: function() {
-    this.cout( "\nКоманда help:" );
-    this.cout( "\nКраткая помощь по этому терминалу" );
+    this.cout( "\nHelp command:" );
+    this.cout( "\nJSConsole help brief" );
   }
 } );
