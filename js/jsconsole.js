@@ -24,10 +24,13 @@ var JSConsole = new Class( {
   initHistory: function() {
     this.history = [];
     var tmp;
+    var key = this.options.history_storage_key;
     if ( localStorage !== undefined ) {
-      if ( localStorage[ this.options.history_storage_key ] != undefined ) {
+      if ( localStorage[ key ] != undefined ) {
         try {
-          tmp = JSON.parse( localStorage[ this.options.history_storage_key ] );
+          tmp = JSON.parse(
+            localStorage[ key ]
+          );
           if ( tmp instanceof Array ) {
             this.history = tmp;
           }
@@ -48,7 +51,6 @@ var JSConsole = new Class( {
       this.ui.value += "\n";
     }
     this.ui.value += this.prompt + this.sl;
-    console.log( this.ui.value.length );
     if ( !nofocus ) {
       this.setCaretPosition( this.ui.value.length );
       this.ui.scrollTop = this.ui.scrollHeight;
@@ -56,7 +58,10 @@ var JSConsole = new Class( {
   },
 
   getInput: function() {
-    return this.ui.value.substring( this.searchLast( this.ui.value, this.sl ) + 1, this.ui.value.length );
+    return this.ui.value.substring(
+      this.searchLast( this.ui.value, this.sl ) + 1,
+      this.ui.value.length
+    );
   },
 
   searchLast: function( str, reg ) {
@@ -73,15 +78,17 @@ var JSConsole = new Class( {
   keyPressed: function( e ) {
     var input = this.getInput();
     var self = this;
-    if ( this.ui.selectionStart <= this.searchLast( this.ui.value, "\0" ) ) {
+    if ( this.ui.selectionStart <=
+      this.searchLast( this.ui.value, "\0" ) ) {
       e.stop();
       return;
     }
     switch( e.code ) {
       case 13:
         e.stop();
-        this.proceed( input, function() { self.pprompt.call( self );
- } );
+        this.proceed( input, function() {
+          self.pprompt.call( self );
+        } );
         break;
       case 8:
         if ( input == "" )
@@ -142,8 +149,26 @@ var JSConsole = new Class( {
     var command = argv[ 0 ];
     var argc = argv.slice( 1 );
     if ( this.commandPool[ command ] == null ) {
-      var absolutely = [ "И поныне так", "Безоговорочно", "Вне всяких сомнений", "Совсем", "Вовсе", "Если вы понимаете, о чем я", "Опять", "Кто бы сомневался", "Удивил, ага" ];
-      this.cout( "\nКоманда <" + command + "> не найдена. " + absolutely[ Math.floor( Math.random() * absolutely.length ) ] + "." );
+      var absolutely = [
+        "И поныне так",
+        "Безоговорочно",
+        "Вне всяких сомнений",
+        "Совсем",
+        "Вовсе",
+        "Если вы понимаете, о чем я",
+        "Опять",
+        "Кто бы сомневался",
+        "Удивил, ага"
+      ];
+      this.cout(
+        "\nКоманда <" +
+        command +
+        "> не найдена. " +
+        absolutely[
+          Math.floor( Math.random() * absolutely.length )
+        ] +
+        "."
+      );
       cb();
       return;
     }
@@ -158,7 +183,8 @@ var JSConsole = new Class( {
         this.options.max_history_length
       );
     }
-    localStorage[ this.options.history_storage_key ] = JSON.stringify( this.history );
+    localStorage[ this.options.history_storage_key ] =
+      JSON.stringify( this.history );
   },
 
   hint: function( chunk ) {
@@ -166,11 +192,14 @@ var JSConsole = new Class( {
     var keys = Object.keys( this.commandPool );
     var to_prompt = [];
     Object.each( keys, function( obj ) {
-      if ( obj.search( chunk ) === 0 ) to_prompt.push( obj );
+      if ( obj.search( chunk ) === 0 ) {
+        to_prompt.push( obj );
+      }
     } );
     if ( to_prompt.length == 0 ) return;
     if ( to_prompt.length == 1 ) {
-      this.cout( to_prompt[ 0 ].substring( chunk.length, to_prompt[ 0 ].length ) );
+      this.cout( to_prompt[ 0 ].substring( chunk.length,
+        to_prompt[ 0 ].length ) );
       return;
     }
     this.cout( "\n" + to_prompt.join( "\t" ) );
@@ -225,10 +254,11 @@ var JSConsole = new Class( {
 
   bindSlideDown: function() {
     var _parent = this.ui.getParent();
-    _parent.getElements( ".swiper" ).addEvent( "click", function( e ) {
-      e.stop();
-      _parent.toggleClass( "collapsed" );
-    } );
+    _parent.getElements( ".swiper" )
+      .addEvent( "click", function( e ) {
+        e.stop();
+        _parent.toggleClass( "collapsed" );
+      } );
   },
   
   focus: function() {
