@@ -19,6 +19,7 @@ var JSConsole = new Class( {
     });
     this.pprompt( true );
     this.bindSlideDown();
+    this.registerDefaultCommands();
   },
 
   initHistory: function() {
@@ -84,12 +85,14 @@ var JSConsole = new Class( {
       return;
     }
     switch( e.code ) {
+      // enter
       case 13:
         e.stop();
         this.proceed( input, function() {
           self.pprompt.call( self );
         } );
         break;
+      // backspace
       case 8:
         if ( input == "" )
           e.stop();
@@ -100,6 +103,7 @@ var JSConsole = new Class( {
           e.stop();
           this.ui.value = "";
           this.pprompt();
+          this.cout( input );
         }
         break;
       case 67:
@@ -148,29 +152,8 @@ var JSConsole = new Class( {
     var argv = cmd.split( " " );
     var command = argv[ 0 ];
     var argc = argv.slice( 1 );
-    if ( this.commandPool[ command ] == null ) {
-      var absolutely = [
-        "И поныне так",
-        "Безоговорочно",
-        "Вне всяких сомнений",
-        "Совсем",
-        "Вовсе",
-        "Если вы понимаете, о чем я",
-        "Опять",
-        "Кто бы сомневался",
-        "Удивил, ага"
-      ];
-      this.cout(
-        "\nКоманда <" +
-        command +
-        "> не найдена. " +
-        absolutely[
-          Math.floor( Math.random() * absolutely.length )
-        ] +
-        "."
-      );
-      cb();
-      return;
+    if ( this.commandPool[ command ] === undefined ) {
+      command = null;
     }
     this.commandPool[ command ].exec( argc, cb );
   },
@@ -264,6 +247,11 @@ var JSConsole = new Class( {
   focus: function() {
     this.ui.focus();
     this.setCaretPosition( this.ui.value.length );
+  },
+  
+  registerDefaultCommands: function() {
+    this.registerCommand( new NotFoundCommand() );
+    this.registerCommand( new ManCommand() );
   }
   
 } );

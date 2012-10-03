@@ -19,7 +19,6 @@ var Command = new Class( {
   argGiven: function( argc ) {
     if ( arguments.length > 1 ) {
       for ( var i = 1; i <= arguments.length; ++i ) {
-        console.log( arguments[ i ] );
         if ( argc.indexOf( arguments[ i ] ) != -1 ) {
           return true;
         };
@@ -27,7 +26,8 @@ var Command = new Class( {
     }
     return false;
   },
+  
   help: function() {
-    this.cout( "\nПо какой-то причине мы поленились написать руководство к этой команде. Даже не знаю по какой )))" );
+    this.cout( "\nUnfortunately no help record found for this command." );
   }
 } );

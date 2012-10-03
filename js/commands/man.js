@@ -1,6 +1,9 @@
 var ManCommand = new Class( {
+  
   Extends: Command,
+  
   name: "man",
+  
   exec: function( argc, cb ) {
     if ( argc.length < 1 ) {
       this.help();
@@ -14,6 +17,7 @@ var ManCommand = new Class( {
     }
     this.parent( argc, cb );
   },
+  
   help: function() {
     this.cout( "\nКоманда man:" );
     this.cout( "\nПолучение информации об использовании команд" );
