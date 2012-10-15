@@ -85,6 +85,7 @@ var JSConsole = new Class( {
       e.stop();
       return;
     }
+    console.log( e.code )
     switch( e.code ) {
       // enter
       case 13:
@@ -120,6 +121,13 @@ var JSConsole = new Class( {
           this.pprompt();
         }
         break;
+      case 87:
+        // Ctrl + W
+        if ( e.meta == true || e.control == true ) {
+          e.stop();
+          this.removeLastWord();
+        }
+        break;
       case 37:
       //case 38:
         if ( e.meta == true || e.control == true ) {
@@ -152,7 +160,7 @@ var JSConsole = new Class( {
     Object.each(
       this.commandPool,
       function( v, k ) {
-        v.terminate.call( v )
+        v.terminate.call( v );
       }
     );
   },
@@ -242,6 +250,12 @@ var JSConsole = new Class( {
 
   cout: function( v ) {
     this.ui.value += v;
+  },
+
+  removeLastWord: function() {
+    this.replaceInputWith(
+      this.getInput().replace( /[^\s]*\s*$/, "" )
+    );
   },
 
   // http://stackoverflow.com/questions/512528/set-cursor-position-in-html-textbox

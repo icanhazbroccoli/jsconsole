@@ -14,11 +14,7 @@ var LoginCommand = new Class({
     this.active = false;
     var self = this;
     document.addEvent( "keydown", function( e ) {
-      //try {
       self.onKeyPressed.call( self, e );
-      //} catch ( e ) {
-        //console.log( "error: " + e.message );
-      //}
     } );
   },
 
@@ -32,11 +28,10 @@ var LoginCommand = new Class({
         this.promptPassword();
       } else {
         this.password = this.hidden_typed;
-        //this.releaseInput();
         this.terminal.releaseInput();
         this.active = false;
         if ( typeof( this.cb ) == "function" ) {
-          this.cb.call( this.terminal );
+          //this.cb.call( this.terminal );
         }
       }
     } else if ( this.show_type === false ) {
