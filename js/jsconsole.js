@@ -9,6 +9,7 @@ var JSConsole = new Class( {
   initialize: function( options ) {
     this.options = Object.merge( this.options, options );
     this.commandPool = {};
+    this.registeredHandlers = {};
     this.sl = this.options.sl;
     this.prompt = this.options.prompt;
     this.ui = this.options.ui;
@@ -20,6 +21,7 @@ var JSConsole = new Class( {
     this.pprompt( true );
     this.bindSlideDown();
     this.registerDefaultCommands();
+    this.input_captured = false;
   },
 
   initHistory: function() {
@@ -39,11 +41,6 @@ var JSConsole = new Class( {
         }
       }
     }
-  },
-
-  registerCommand: function( command ) {
-    this.commandPool[ command.name ] = command;
-    command.setTerminal( this );
   },
 
   pprompt: function( nofocus ) {
@@ -87,6 +84,9 @@ var JSConsole = new Class( {
     switch( e.code ) {
       // enter
       case 13:
+        if ( this.input_captured ) {
+          break;
+        }
         e.stop();
         this.proceed( input, function() {
           self.pprompt.call( self );
@@ -140,6 +140,14 @@ var JSConsole = new Class( {
       default:
         break;
     }
+  },
+
+  captureInput: function() {
+    this.input_captured = true;
+  },
+  
+  releaseInput: function() {
+    this.input_captured = false;
   },
 
   proceed: function( cmd, cb ) {
@@ -236,6 +244,8 @@ var JSConsole = new Class( {
         elem.setSelectionRange( caretPos, caretPos );
       }
     }
+    
+    return this;
   },
 
   bindSlideDown: function() {
@@ -250,11 +260,48 @@ var JSConsole = new Class( {
   focus: function() {
     this.ui.focus();
     this.setCaretPosition( this.ui.value.length );
+    
+    return this;
   },
   
+  blur: function() {
+    this.ui.blur();
+    
+    return this;
+  },
+  
+  registerHandler: function( id, handler ) {
+    if ( this.registeredHandlers[ id ] === undefined ) {
+      this.registeredHandlers[ id ] = [];
+    }
+    this.registeredHandlers[ id ].push( handler );
+    
+    return this;
+  },
+
+  registerCommand: function( command ) {
+    this.commandPool[ command.name ] = command;
+    command.setTerminal( this );
+    
+    return this;
+  },
+
   registerDefaultCommands: function() {
     this.registerCommand( new NotFoundCommand() );
     this.registerCommand( new ManCommand() );
+    
+    return this;
+  },
+  
+  callRegisteredHandlers: function( id, scope ) {
+    scope = scope || this;
+    if ( this.registeredHandlers[ id ] != undefined ) {
+      this.registeredHandlers[ id ].each( function( el ) {
+        el.call( scope );
+      } )
+    }
+    
+    return this;
   }
   
 } );

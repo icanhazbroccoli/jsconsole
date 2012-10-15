@@ -12,15 +12,15 @@ var ManCommand = new Class( {
       if ( cmd !== undefined ) {
         cmd.help();
       } else {
-        this.cout( "\n" + argc[ 0 ] + ": команда не найдена. Для списка доступных команд можно набрать help↲" );
+        this.cout( "\n" + argc[ 0 ] + ": command not found. Try enter help↲ for usage brief." );
       }
     }
     this.parent( argc, cb );
   },
   
   help: function() {
-    this.cout( "\nКоманда man:" );
-    this.cout( "\nПолучение информации об использовании команд" );
-    this.cout( "\nИспользование: man <команда>" );
+    this.cout( "\nman command:" );
+    this.cout( "\nProvides help info about commands available." );
+    this.cout( "\nUsage: man <command>" );
   }
 } );
