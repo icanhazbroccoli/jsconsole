@@ -85,7 +85,6 @@ var JSConsole = new Class( {
       e.stop();
       return;
     }
-    console.log( e.code )
     switch( e.code ) {
       // enter
       case 13:
@@ -104,7 +103,7 @@ var JSConsole = new Class( {
         break;
       case 75:
         // ⌘ + K || Ctrl + K
-        if ( e.meta == true || e.control == true ) {
+        if ( this.withMetaKey( e ) ) {
           e.stop();
           this.ui.value = "";
           this.pprompt();
@@ -113,7 +112,7 @@ var JSConsole = new Class( {
         break;
       case 67:
         // Ctrl + C
-        if ( e.control == true ) {
+        if ( this.withCntrlKey( e ) ) {
           this.cout( "^C" );
           this.resetHistoryIndex();
           this.terminate();
@@ -123,14 +122,14 @@ var JSConsole = new Class( {
         break;
       case 87:
         // Ctrl + W
-        if ( e.meta == true || e.control == true ) {
+        if ( this.withMetaKey( e ) ) {
           e.stop();
           this.removeLastWord();
         }
         break;
       case 37:
       //case 38:
-        if ( e.meta == true || e.control == true ) {
+        if ( this.withMetaKey( e ) ) {
           e.stop();
           break;
         }
@@ -153,6 +152,18 @@ var JSConsole = new Class( {
       default:
         break;
     }
+  },
+
+  withMetaKey: function( e ) {
+    return this.withCmdKey( e ) || this.withCntrlKey( e );
+  },
+
+  withCntrlKey: function( e ) {
+    return e.control == true;
+  },
+
+  withCmdKey: function( e ) {
+    return e.meta == true;
   },
 
   terminate: function() {

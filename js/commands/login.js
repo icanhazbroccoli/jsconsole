@@ -30,12 +30,14 @@ var LoginCommand = new Class({
         this.password = this.hidden_typed;
         this.terminal.releaseInput();
         this.active = false;
+        console.log( this.password );
         if ( typeof( this.cb ) == "function" ) {
-          //this.cb.call( this.terminal );
+          this.cb.call( this.terminal );
         }
       }
     } else if ( this.show_type === false ) {
-      // this.hidden_typed += e.
+      e.stop();
+      this.hidden_typed += e.key;
     }
   },
 
@@ -65,17 +67,10 @@ var LoginCommand = new Class({
   },
   
   promptPassword: function() {
-    this.cout( "\nPassword: " );
+    this.cout( "\nPassword(input hidden): " );
     this.setShowType( false );
     hidden_typed = "";
   },
-  
-//  releaseInput: function() {
-//    //this.terminal.ui.removeEvent( "keydown", this.onKeyPressed );
-//    
-//    
-//    return this;
-//  },
   
   help: function() {
     this.cout( "\nLogin command" );
