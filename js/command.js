@@ -16,6 +16,9 @@ var Command = new Class( {
     this.terminal.cout( arg );
   },
 
+  terminate: function() {
+  },
+
   argGiven: function( argc ) {
     if ( arguments.length > 1 ) {
       for ( var i = 1; i <= arguments.length; ++i ) {

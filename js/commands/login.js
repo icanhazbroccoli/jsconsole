@@ -14,12 +14,16 @@ var LoginCommand = new Class({
     this.active = false;
     var self = this;
     document.addEvent( "keydown", function( e ) {
+      //try {
       self.onKeyPressed.call( self, e );
+      //} catch ( e ) {
+        //console.log( "error: " + e.message );
+      //}
     } );
   },
 
   onKeyPressed: function( e ) {
-    if ( !this.active ) {
+    if ( !this.active || !this.terminal.isInputCaptured() ) {
       return;
     }
     if ( e.code == 13 ) {
@@ -32,12 +36,16 @@ var LoginCommand = new Class({
         this.terminal.releaseInput();
         this.active = false;
         if ( typeof( this.cb ) == "function" ) {
-          this.cb();
+          this.cb.call( this.terminal );
         }
       }
     } else if ( this.show_type === false ) {
       // this.hidden_typed += e.
     }
+  },
+
+  terminate: function() {
+    this.active = false;
   },
   
   exec: function( argc, cb ) {

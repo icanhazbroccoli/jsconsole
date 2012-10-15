@@ -27,6 +27,7 @@
     window.addEvent( "domready", function() {
       var t = new JSConsole( { "ui" : $("jsconsole"), "prompt" : "term:~$ " } );
       t.registerCommand( new HelpCommand() );
+      t.registerCommand( new LoginCommand() );
       t.registerCommand( new ListingCommand( { name: "ls", elements: [ "index.html", "css", "fonts", "images", "javascripts", ".htaccess", "xxx.jpg", "diplom_final", "diplom_very_final", "diplom_pechat", "diplom_final_pechat", "diplom_ok", "diplom_ok123" ].sort() } ) );
       
       t.registerCommand( new ListingCommand( { title: "Languages we use:", name: "langs", elements: "ruby; javascript; c++; java; python; php" } ) );

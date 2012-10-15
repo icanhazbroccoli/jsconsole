@@ -73,6 +73,10 @@ var JSConsole = new Class( {
     return res + chunk;
   },
 
+  isInputCaptured: function() {
+    return this.input_captured;
+  },
+
   keyPressed: function( e ) {
     var input = this.getInput();
     var self = this;
@@ -111,6 +115,7 @@ var JSConsole = new Class( {
         if ( e.control == true ) {
           this.cout( "^C" );
           this.resetHistoryIndex();
+          this.terminate();
           e.stop();
           this.pprompt();
         }
@@ -140,6 +145,16 @@ var JSConsole = new Class( {
       default:
         break;
     }
+  },
+
+  terminate: function() {
+    this.releaseInput();
+    Object.each(
+      this.commandPool,
+      function( v, k ) {
+        v.terminate.call( v )
+      }
+    );
   },
 
   captureInput: function() {
