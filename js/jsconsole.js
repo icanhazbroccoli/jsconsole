@@ -191,7 +191,7 @@ var JSConsole = new Class( {
     }
     this.pushHistory( cmd );
     this.resetHistoryIndex();
-    var argv = cmd.split( " " );
+    var argv = cmd.split( /\s+/ );
     var command = argv[ 0 ];
     var argc = argv.slice( 1 );
     if ( this.commandPool[ command ] === undefined ) {
@@ -204,6 +204,11 @@ var JSConsole = new Class( {
     if ( cmd == this.history[ this.history.length - 1 ] ) {
       return;
     }
+    
+    if ( cmd.match( /\w+/ ) === null ) {
+      return;
+    }
+
     this.history.push( cmd );
     if ( this.history.length > this.options.max_history_length ) {
       this.history = this.history.slice(
@@ -236,7 +241,9 @@ var JSConsole = new Class( {
   },
 
   historySearch: function( step ) {
-    if ( this.history_index === undefined ) this.resetHistoryIndex();
+    if ( this.history_index === undefined ) {
+      this.resetHistoryIndex();
+    }
     if ( this.history_index === null ) {
       this.history_index = this.history.length;
       this.last_input = this.getInput();
@@ -246,6 +253,7 @@ var JSConsole = new Class( {
       this.history_index = new_index;
       this.replaceInputWith( this.history[ this.history_index ] );
     } else if ( new_index == this.history.length ) {
+      this.history_index = new_index;
       this.replaceInputWith( this.last_input || "" );
     }
   },
@@ -342,6 +350,10 @@ var JSConsole = new Class( {
     }
     
     return this;
+  },
+
+  getSL: function() {
+    return this.options.sl;
   }
   
 } );

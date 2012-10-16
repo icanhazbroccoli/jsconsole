@@ -23,6 +23,7 @@ var LoginCommand = new Class({
       return;
     }
     if ( e.code == 13 ) {
+      e.stop();
       if ( this.login === null ) {
         this.login = this.terminal.getInput();
         this.promptPassword();
@@ -62,12 +63,12 @@ var LoginCommand = new Class({
   },
   
   promptLogin: function() {
-    this.cout( "\nLogin: " );
+    this.cout( "\nLogin: " + this.terminal.getSL() );
     this.setShowType( true );
   },
   
   promptPassword: function() {
-    this.cout( "\nPassword(input hidden): " );
+    this.cout( "\nPassword(input hidden): " + this.terminal.getSL() );
     this.setShowType( false );
     hidden_typed = "";
   },
