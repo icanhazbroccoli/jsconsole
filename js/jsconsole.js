@@ -81,7 +81,7 @@ var JSConsole = new Class( {
     var input = this.getInput();
     var self = this;
     if ( this.ui.selectionStart <=
-      this.searchLast( this.ui.value, "\0" ) ) {
+      this.searchLast( this.ui.value, this.options.sl ) ) {
       e.stop();
       return;
     }
@@ -201,6 +201,7 @@ var JSConsole = new Class( {
   },
   
   pushHistory: function( cmd ) {
+    
     if ( cmd == this.history[ this.history.length - 1 ] ) {
       return;
     }
@@ -211,9 +212,10 @@ var JSConsole = new Class( {
 
     this.history.push( cmd );
     if ( this.history.length > this.options.max_history_length ) {
+      var new_idx = this.history.length - this.options.max_history_length;
       this.history = this.history.slice(
-        this.history.length - this.options.max_history_length,
-        this.options.max_history_length
+        new_idx,
+        new_idx + this.options.max_history_length
       );
     }
     localStorage[ this.options.history_storage_key ] =
@@ -249,12 +251,15 @@ var JSConsole = new Class( {
       this.last_input = this.getInput();
     }
     var new_index = this.history_index + step;
-    if ( new_index >= 0 && new_index < this.history.length ) {
+    if ( new_index >= 0 && new_index <= this.history.length ) {
       this.history_index = new_index;
-      this.replaceInputWith( this.history[ this.history_index ] );
-    } else if ( new_index == this.history.length ) {
-      this.history_index = new_index;
-      this.replaceInputWith( this.last_input || "" );
+      var replacement;
+      if ( new_index == this.history.length ) {
+        replacement = ( this.last_input || "" );
+      } else {
+        replacement = this.history[ this.history_index ];
+      }
+      this.replaceInputWith( replacement );
     }
   },
 
