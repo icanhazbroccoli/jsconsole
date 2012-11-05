@@ -15,6 +15,7 @@
   <script type="text/javascript" src="js/commands/man.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/who.js" charset="utf-8"></script>
   <script type="text/javascript" src="js/commands/login.js" charset="utf-8"></script>
+  <script type="text/javascript" src="js/commands/exclamation.js" charset="utf-8"></script>
   
   <script type="text/javascript" src="js/jsconsole.js" charset="utf-8"></script>
   
@@ -35,8 +36,9 @@
       t.registerCommand( new ContactsCommand( { "phone": "+7 916 875 15 16", "email": "dd@devdep.ru", "skype": "devdep" } ) );
       t.registerCommand( new WhoCommand() );
       t.registerCommand( CommandFactory.create().named( "asdasd" ).withBody( "Why not!" ) );
-      t.registerCommand( CommandFactory.create().named( "!" ).withBody( "Rly?" ) );
+      //t.registerCommand( CommandFactory.create().named( "!" ).withBody( "Rly?" ) );
       t.registerCommand( CommandFactory.create().named( "?" ).withBody( "42" ) );
+      t.registerCommand( new ExclamationCommand() );
       t.focus();
     } );
   </script>
